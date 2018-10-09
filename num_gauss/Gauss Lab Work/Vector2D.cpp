@@ -13,7 +13,7 @@ using namespace std;
 const int maxNum = 100.0;
 
 
-/* Создание простого вектора */
+/* РЎРѕР·РґР°РЅРёРµ РїСЂРѕСЃС‚РѕРіРѕ РІРµРєС‚РѕСЂР° */
 cVector createRandomVector(unsigned number) {
 	cVector Arr(number);
 	for (size_t i = 0; i < number; i++) {
@@ -22,7 +22,7 @@ cVector createRandomVector(unsigned number) {
 	return Arr;
 }
 
-/* Создание двойного вектора */
+/* РЎРѕР·РґР°РЅРёРµ РґРІРѕР№РЅРѕРіРѕ РІРµРєС‚РѕСЂР° */
 cMatrix createRandomMatrix(unsigned row, unsigned col) {
 	cMatrix Arr(row);
 	srand(time(0));
@@ -32,7 +32,7 @@ cMatrix createRandomMatrix(unsigned row, unsigned col) {
 	return Arr;
 }
 
-/* Вывод простого вектора на экран */
+/* Р’С‹РІРѕРґ РїСЂРѕСЃС‚РѕРіРѕ РІРµРєС‚РѕСЂР° РЅР° СЌРєСЂР°РЅ */
 void printArray(cVector Arr, int after_point) {
 	cout << fixed << setprecision(after_point);
 	for (auto x : Arr) {
@@ -41,7 +41,7 @@ void printArray(cVector Arr, int after_point) {
 	cout << "\n";
 }
 
-/* Вывод двойного вектора на экран */
+/* Р’С‹РІРѕРґ РґРІРѕР№РЅРѕРіРѕ РІРµРєС‚РѕСЂР° РЅР° СЌРєСЂР°РЅ */
 void printArray(cMatrix Arr, int after_point) {
 	cout << fixed << setprecision(after_point);
 	for (auto x : Arr) {
