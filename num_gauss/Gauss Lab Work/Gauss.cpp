@@ -8,24 +8,24 @@
 #include "Vector2D.h"
 
 cVector mathGauss(cMatrix Arr, cVector Brr) {
-	/* Без использования указателя на СЛАУ*/
+	/* Р‘РµР· РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° РЎР›РђРЈ*/
 
 	const float epsValue = 0.001;
 	size_t Size = Arr.size();
 
-	/* Добавление столбца значений в СЛАУ */
+	/* Р”РѕР±Р°РІР»РµРЅРёРµ СЃС‚РѕР»Р±С†Р° Р·РЅР°С‡РµРЅРёР№ РІ РЎР›РђРЈ */
 	auto column = Brr.begin();
 	for (auto &row : Arr) {
 		row.push_back(*column++);
 	}
 
-	/* --------------> Прямой ход метода Гаусса <-------------- */
+	/* --------------> РџСЂСЏРјРѕР№ С…РѕРґ РјРµС‚РѕРґР° Р“Р°СѓСЃСЃР° <-------------- */
 
 	for (size_t i = 0; i < Size; i++) {
 		float maxItem = fabs(Arr[i][i]);
 		size_t maxIndex = i;
 
-		/* Выбор ведущего элемента столбца */
+		/* Р’С‹Р±РѕСЂ РІРµРґСѓС‰РµРіРѕ СЌР»РµРјРµРЅС‚Р° СЃС‚РѕР»Р±С†Р° */
 		for (size_t k = i + 1; k < Size; k++) {
 			if (fabs(Arr[k][i]) > maxItem) {
 				maxItem = fabs(Arr[k][i]);
@@ -38,7 +38,7 @@ cVector mathGauss(cMatrix Arr, cVector Brr) {
 			return {0};
 		}
 
-		/* Перестановка элементов*/
+		/* РџРµСЂРµСЃС‚Р°РЅРѕРІРєР° СЌР»РµРјРµРЅС‚РѕРІ*/
 		for (size_t k = i; k < Size + 1; k++) {
 			std::swap(Arr[maxIndex][k], Arr[i][k]);
 			
@@ -47,7 +47,7 @@ cVector mathGauss(cMatrix Arr, cVector Brr) {
 			Arr[i][k] = Temp;*/
 		}
 
-		/* Приведение к треугольному виду */
+		/* РџСЂРёРІРµРґРµРЅРёРµ Рє С‚СЂРµСѓРіРѕР»СЊРЅРѕРјСѓ РІРёРґСѓ */
 		for (size_t k = i + 1; k < Size; k++) {
 			float Temp = -Arr[k][i] / Arr[i][i];
 			for (size_t j = i; j < Size + 1; j++) {
@@ -61,7 +61,7 @@ cVector mathGauss(cMatrix Arr, cVector Brr) {
 		}
 	}
 	
-	/* Вывод решения */
+	/* Р’С‹РІРѕРґ СЂРµС€РµРЅРёСЏ */
 	cVector Rrr(Size);
 	for (int i = Size - 1; i >= 0; i--) {
 		Rrr[i] = Arr[i][Size] / Arr[i][i];
@@ -73,7 +73,7 @@ cVector mathGauss(cMatrix Arr, cVector Brr) {
 	return Rrr;
 }
 
-/* Рассчитываем вектор невязки */
+/* Р Р°СЃСЃС‡С‘С‚ РІРµРєС‚РѕСЂ РЅРµРІСЏР·РєРё */
 cVector mathResidual(cMatrix Arr, cVector Brr, cVector Rrr) {
 	size_t Size = Arr.size();
 	cVector Err(Size);
@@ -88,7 +88,7 @@ cVector mathResidual(cMatrix Arr, cVector Brr, cVector Rrr) {
 	return Err;
 }
 
-/* Сравниваем значения вектора невязки с пределом */
+/* РЎСЂР°РІРЅРёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РІРµРєС‚РѕСЂР° РЅРµРІСЏР·РєРё СЃ РїСЂРµРґРµР»РѕРј */
 unsigned compareResidualValues(cVector Err, float value) {
 	size_t count = 0;
 	size_t Size = Err.size();
@@ -103,9 +103,9 @@ unsigned compareResidualValues(cVector Err, float value) {
 		return 0;
 }
 
-/*	Вывод системы уравнений, который на самом деле
-	двойной вектор, который в свою очередь состоит
-	из простых векторов, на экран */
+/*	Р’С‹РІРѕРґ СЃРёСЃС‚РµРјС‹ СѓСЂР°РІРЅРµРЅРёР№, РєРѕС‚РѕСЂС‹Р№ РЅР° СЃР°РјРѕРј РґРµР»Рµ
+	РґРІРѕР№РЅРѕР№ РІРµРєС‚РѕСЂ, РєРѕС‚РѕСЂС‹Р№ РІ СЃРІРѕСЋ РѕС‡РµСЂРµРґСЊ СЃРѕСЃС‚РѕРёС‚
+	РёР· РїСЂРѕСЃС‚С‹С… РІРµРєС‚РѕСЂРѕРІ, РЅР° СЌРєСЂР°РЅ */
 void printLinSys(cMatrix Arr, cVector Brr, int after_point) {
 
 	cout << fixed << setprecision(after_point);
