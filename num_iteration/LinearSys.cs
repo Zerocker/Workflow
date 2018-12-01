@@ -70,10 +70,15 @@ namespace Iteration
                 {
                     for (int j = 0; j < Size; j++)
                     {
-                        if (j != i)
+                        if (j < i)
                         {
-                            CurrentValues[i] -= A[i, j] * PreviousValues[j];
+                            CurrentValues[i] -= A[i, j] * CurrentValues[j];
                         }
+			
+			            if (j > i)
+			            {
+			                 CurrentValues[i] -= A[i, j] * PreviousValues[j];
+			            }
                             
                     }
                     CurrentValues[i] /= A[i, i];
