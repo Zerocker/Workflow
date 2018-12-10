@@ -9,74 +9,24 @@ entry code:main
 div_fac3    dd    6
 div_fac5    dd    120
 
-msg_s       db    'Input s: $'
-msg_t       db    10, 13, 'Input t: $'
-msg_result  db    10, 13, 'Result: $'
+str_s       db    'Input s: $'
+str_t       db    'Input t: $'
+str_result  db    'Result: $'
+str_err     db    13, 10, 'Error!$'
+str_temp    db    27, 0, 27 dup ('$')
 
-user_s      dd    12
-user_t      dd    17
+dword_s     dd    0
+dword_t     dd    0
+
 buff_0      dd    0
 buff_1      dd    0
 buff_2      dd    0
 
 segment code
 ;; ---------------------------------------------------------------
-;  Функции ввода и вывода
-;; ---------------------------------------------------------------
-; Вывод строки на экран: eax
-output:
-    mov dx, ax
-    mov ah, 09h
-    int 21h
-    ret
-
-; Вывод числа на экран: eax
-print:
-; Проверяем число на знак.
-    test eax, eax
-    jns  oi1
-; Если оно отрицательное, выведем минус и оставим его модуль.
-    mov  ecx, eax
-    mov  ah, 02h
-    mov  dl, '-'
-    int  21h
-    mov  eax, ecx
-    neg  eax
-; Количество цифр будем держать в CX.
-    oi1:
-    xor     ecx, ecx
-    mov     ebx, 10 ; основание сс. 10 для десятеричной и т.п.
-    oi2:
-    xor     edx,edx
-    div     ebx
-; Делим число на основание сс. В остатке получается последняя цифра.
-; Сразу выводить её нельзя, поэтому сохраним её в стэке.
-    push    edx
-    inc     ecx
-; А с частным повторяем то же самое, отделяя от него очередную
-; цифру справа, пока не останется ноль, что значит, что дальше
-; слева только нули.
-    test    eax, eax
-    jnz     oi2
-; Теперь приступим к выводу.
-    mov     ah, 02h
-    oi3:
-    pop     edx
-; Извлекаем очередную цифру, переводим её в символ и выводим.
-    cmp     dl,9
-    jbe     oi4
-    add     dl,7
-    oi4:
-    add     dl, '0'
-    int     21h
-; Повторим ровно столько раз, сколько цифр насчитали.
-    loop    oi3
-    ret
-
-;; ---------------------------------------------------------------
 ;  Математические операции
 ;; ---------------------------------------------------------------
-; Число в 3-й степени: eax --> eax
+; Число в 3-й степени: ax --> eax
 pow3:
     push bp;
     mov bp, sp;
@@ -89,7 +39,7 @@ pow3:
     pop bp
     ret 4;
 
-; Число в 5-й степени: eax --> eax
+; Число в 5-й степени: ax --> eax
 pow5:
     push bp;
     mov bp, sp;
@@ -103,7 +53,7 @@ pow5:
     pop bp
     ret 4;
 
-; Синус числа: eax --> eax
+; Синус числа: ax --> eax
 sin:
     push bp;
     mov bp, sp;
@@ -176,13 +126,155 @@ func:
     ret 12;
 
 ;; ---------------------------------------------------------------
+;  Функции ввода и вывода
+;; ---------------------------------------------------------------
+;; Вывод строки на экран: eax
+print_str:
+    mov dx, ax
+    mov ah, 09h
+    int 21h
+    ret
+
+
+;; Чтение строки из буфера
+read_str:
+    mov dx, str_temp
+    mov ah, 0Ah
+    int 21h
+    ret
+
+
+;; Чтение двойного слова со знаком: x -> eax
+read_dword:
+; Читаем строку
+    mov ah, 0Ah;
+    xor di, di;
+    mov dx, str_temp;   Адресс временного хранения строки
+    int 21h;
+; Вывод перевода строки
+    mov dl, 0Ah;
+    mov ah, 02h;
+    int 21h;
+; Обрабатываем содердимое буфера
+    mov si, str_temp+2;   Начало строки
+    cmp byte[si], '-';    Если первый символ - минус
+    jnz .ready
+    mov di, 1;            Устанавливаем флаг
+    inc si;               Пропускаем символ
+
+.ready:
+    ; Готовим результат
+    xor eax, eax;
+
+; Преобразование
+.convert:
+    ; Берем символ из строки
+    mov cl, [si];
+    ; Является ли он последним?
+    cmp cl, 0Dh
+    jz .end
+
+    ; Символ не должен быть больше '0'
+    cmp cl, '0';
+    jb .error
+    ; Символ не должен быть меньше '9'
+    cmp cl, '9';
+    ja .error
+
+    ; 'Преобразовываем' символ в число
+    sub cl, '0';
+    ; Умножаем результат на 10 (или на другое основание);
+    imul eax, 10;
+    ; Добавляем в результат цифру
+    add eax, ecx;
+    ; Готовим номер следующего символа
+    inc si;
+    ; Выполняем, пока цифры для преобразования не кончатся
+    jmp .convert;
+
+.error:
+    mov dx, str_err
+    mov ah, 09h
+    int 21h
+    int 20h
+
+.end:
+    ; Если установлен флаг, то ...
+    cmp di, 1;
+    jnz .done
+    ; ... делаем число отрицательным
+    neg ax;
+
+.done:
+    ret;
+
+
+;; Вывод двойного слова со знаком: eax
+print_dword:
+; Проверяем число на знак.
+    test eax, eax
+    jns .unsigned
+; Если оно отрицательное, выведем минус и оставим его модуль.
+    mov ecx, eax
+    mov ah, 02h
+    mov dl, '-'
+    int 21h
+    mov eax, ecx
+    neg eax
+; Количество цифр будем держать в CX.
+.unsigned:
+    xor ecx, ecx
+    mov ebx, 10 ;    Основание
+.div:
+    xor edx, edx
+    div ebx
+; Делим число на основание. В остатке получается последняя цифра.
+; Сразу выводить её нельзя, поэтому сохраним её в стэке.
+    push dx
+    inc cx
+; А с частным повторяем то же самое, отделяя от него очередную
+; цифру справа, пока не останется ноль, что значит, что дальше
+; слева только нули.
+    test ax, ax
+    jnz .div
+; Теперь приступим к выводу.
+    mov ah, 02h
+.input:
+    pop dx
+; Извлекаем очередную цифру, переводим её в символ и выводим.
+    add dl, '0'
+    int 21h
+; Повторим ровно столько раз, сколько цифр насчитали.
+    loop .input
+; Вывод перевода строки
+    mov dl, 0Ah;
+    mov ah, 02h;
+    int 21h;
+    ret
+
+
+;; ---------------------------------------------------------------
 ;  Основное тело программы
 ;; ---------------------------------------------------------------
 main:
+    mov eax, -14705;
+    call print_dword;
+
+    ; Input s:
+    mov ax, str_s;
+    call print_str;
+    call read_dword;
+    mov [dword_s], eax;
+
+    ; Input t:
+    mov ax, str_t;
+    call print_str;
+    call read_dword;
+    mov [dword_t], eax;
 
     ; func(t, -2*s, 1)
-    mov eax, dword[user_t];
-    mov ebx, dword[user_s];
+    mov eax, [dword_t];
+    mov ebx, [dword_s];
     imul ebx, -2;
     mov ecx, 1;
     ;-----------------
@@ -194,9 +286,9 @@ main:
 
     ; func(2, t, s-t)
     mov eax, 2;
-    mov ebx, dword[user_t];
-    mov ecx, dword[user_s];
-    sub ecx, dword[user_t];
+    mov ebx, [dword_t];
+    mov ecx, [dword_s];
+    sub ecx, [dword_t];
     ;-----------------
     push ecx
     push ebx
@@ -205,16 +297,16 @@ main:
     mov [buff_1], eax;
 
     ; func(t, -2*s, 1) + func(2, t, s-t)
-    ;mov eax, [buff_0];
-    ;mov ebx, [buff_1];
-    ;add eax, ebx;
-    ;mov [buff_2], eax;
+    mov eax, [buff_0];
+    mov ebx, [buff_1];
+    add eax, ebx;
+    mov [buff_2], eax;
 
-    mov ax, msg_result
-    call output;
-
-    mov eax, [buff_1];
-    call print;
+    ; Result:
+    mov ax, str_result;
+    call print_str;
+    mov eax, [buff_2];
+    call print_dword;
 
     mov ah, 04h
     int 21h
