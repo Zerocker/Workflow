@@ -58,27 +58,41 @@ sin:
     push bp;
     mov bp, sp;
 
+    ; ------------- [OLD] -------------
     ; Вычисляем число в 3-й степепи
-    mov eax, [bp+4];
-    push eax;
-    call pow3;
-    cdq;
-    idiv dword[div_fac3];
-    mov ebx, eax;
+    ;mov eax, [bp+4];
+    ;push eax;
+    ;call pow3;
+    ;cdq;
+    ;idiv dword[div_fac3];
+    ;mov ebx, eax;
 
     ; Вычисляем число в 5-й степепи
-    mov eax, [bp+4];
+    ;mov eax, [bp+4];
+    ;push eax;
+    ;call pow5;
+    ;cdq;
+    ;idiv dword[div_fac5];
+    ;mov ecx, eax;
+
+    ; Находим sin через ряд Тейлора
+    ;mov eax, [bp+4];
+    ;sub eax, ebx;
+    ;add eax, ecx;
+    ; ------------- [OLD] -------------
+
+    mov eax, [bp+4]
     push eax;
     call pow5;
     cdq;
-    idiv dword[div_fac5];
-    mov ecx, eax;
+    mov ebx, eax;
 
-    ; Находим sin через ряд Тейлора
-    mov eax, [bp+4];
-    sub eax, ebx;
-    add eax, ecx;
-        
+    mov eax, [bp+4]
+    push eax;
+    call pow3;
+    cdq;
+    idiv ebx;
+
     pop bp;
     ret 4;
 
@@ -206,6 +220,8 @@ read_dword:
     neg ax;
 
 .done:
+    ; ax -> eax
+    cwde
     ret;
 
 
@@ -257,9 +273,6 @@ print_dword:
 ;  Основное тело программы
 ;; ---------------------------------------------------------------
 main:
-    mov eax, -14705;
-    call print_dword;
-
     ; Input s:
     mov ax, str_s;
     call print_str;
@@ -308,5 +321,6 @@ main:
     mov eax, [buff_2];
     call print_dword;
 
+    ; Done
     mov ah, 04h
     int 21h

@@ -4,7 +4,7 @@ s = 17
 t = 12
 
 def sin(x):
-    return x - (x**3 // 6) + (x**5 // 120)
+    return x**3 // x**5
 
 def func(a, b, c):
     up = 2*a - b - sin(c)        
