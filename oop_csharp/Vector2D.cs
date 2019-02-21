@@ -30,11 +30,6 @@ namespace Self
         {
             return (float)Math.Sqrt(X * X + Y * Y);
         }
-        public void Multiply(float Value)
-        {
-            X *= Value;
-            Y *= Value;
-        }
         public override string ToString() 
         {
             return $"({X}, {Y})";
