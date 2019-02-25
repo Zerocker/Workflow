@@ -9,7 +9,6 @@ namespace Self
     interface IVector
     {
         float GetLength();
-        void Multiply(float value);
         string ToString();
     }
 }

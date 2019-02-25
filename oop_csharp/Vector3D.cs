@@ -25,12 +25,6 @@ namespace Self
         {
             return (float)Math.Sqrt(X * X + Y * Y + Z * Z);
         }
-        public new void Multiply(float Value)
-        {
-            X *= Value;
-            Y *= Value;
-            Z *= Value;
-        }
         public override string ToString()
         {
             return $"({X}, {Y}, {Z})";
