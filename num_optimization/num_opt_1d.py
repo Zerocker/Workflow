@@ -7,7 +7,7 @@ Eps = 0.001
 
 def findPair(func):
     dX = 0.1
-    XC = 1.0
+    XC = 0.5
     XL = XC - dX
     XR = XC + dX
     
@@ -64,7 +64,8 @@ def dichotomy(pair, func):
 
 ############################################
 
-F = lambda x: (4*x*x + 17) / (x*x + 5)
+#F = lambda x: (4*x*x + 17) / (x*x + 5)
+F = lambda x: (2*x*x - 2*x + 3)**0.5
 Pair = findPair(F)
 x1 = goldRatio(Pair, F)
 x2 = dichotomy(Pair, F)
