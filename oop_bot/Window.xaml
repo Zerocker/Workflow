@@ -1,0 +1,89 @@
+﻿<Window x:Class="Chat_Bot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chat_Bot"
+        mc:Ignorable="d"
+        Title="Chat Bot 0.1.0" 
+        Height="484" 
+        Width="480" 
+        MaxHeight="484" 
+        MaxWidth="480">
+    <Grid 
+    Background="#FFF0F0F0">
+        <Menu 
+        VerticalAlignment="Top" 
+        Height="20" 
+        Background="White">
+            <MenuItem 
+            Header= "Файл" 
+            Height="20">
+                <MenuItem 
+                Header="Очистить историю сообщений" 
+                Click="Menu_EraseChatHistory">
+                </MenuItem>
+                <MenuItem 
+                Header="Очистить содержимое окна" 
+                Click=" Menu_Restart">
+                </MenuItem>
+                <Separator />
+                <MenuItem 
+                Header="Выход" 
+                Click="Menu_Exit">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem
+                Header="О программе"
+                Click ="Menu_About"/>
+        </Menu>
+
+        <Button x:Name="SendButton" 
+        Content="Отправить" 
+        HorizontalAlignment="Left" 
+        Margin="365,376,0,0" 
+        VerticalAlignment="Top" 
+        Width="80" 
+        Height="56"
+        FontSize="14"
+        Click="Send_Message"
+        IsEnabled="{Binding ElementName=MessageText, Path=Text.Length, Mode=OneWay}"
+        />
+
+        <TextBox x:Name ="ChatText" 
+        HorizontalAlignment="Left" 
+        Height="320" 
+        Margin="16,40,0,0" 
+        Width="436" 
+        TextWrapping="Wrap" 
+        Text="" 
+        VerticalAlignment="Top" 
+        SelectionBrush="#FFABADB3" 
+        FontSize="14" 
+        IsReadOnlyCaretVisible="True" 
+        IsReadOnly="True" 
+        HorizontalScrollBarVisibility="Auto" 
+        VerticalScrollBarVisibility="Auto">
+        </TextBox>
+        
+        <TextBox x:Name ="MessageText" 
+        HorizontalAlignment="Left" 
+        Height="56" 
+        Margin="16,376,0,0" 
+        VerticalAlignment="Top" 
+        Width="336"
+        FontSize="14"
+        TextWrapping="Wrap"
+        Text=""
+        AcceptsReturn="False"/>
+        
+        <DockPanel 
+        HorizontalAlignment="Left" 
+        Height="100" 
+        LastChildFill="False" 
+        Margin="83,455,0,-90" 
+        VerticalAlignment="Top" 
+        Width="100"/>
+    
+    </Grid>
+</Window>
