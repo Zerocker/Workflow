@@ -1,0 +1,128 @@
+﻿<Window x:Class="Lab.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab"
+        mc:Ignorable="d"
+        Title="Labwork App" MinHeight="450" MinWidth="800"
+        Height="450" Width="800">
+    <Grid Margin="-2,0,2,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="397*"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125*"/>
+            <ColumnDefinition Width="73*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>
+                    <TextBlock x:Name="logStatus" Text="Welcome!" Margin="8,0"/>
+                </StatusBarItem>
+            </StatusBar>
+        </DockPanel>
+        
+
+        <Menu VerticalAlignment="Top" Background="WhiteSmoke" 
+              Grid.ColumnSpan="2" Height="24">
+            <MenuItem Header= "File">
+                <MenuItem Header="Create" Click="Create"/>
+                <MenuItem Header="Open" Click="Open"/>
+                <MenuItem Header="Save" Click="Save"/>
+                <MenuItem Header="Close" Click="Close"/>
+                <Separator />
+                <MenuItem Header="Exit" Click="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Sort" IsEnabled="{Binding ElementName=DatabaseGrid, Path = Items.Count}">
+                <MenuItem Header="ID" Tag="ID" Click="Force_Sort"/>
+                <MenuItem Header="Last name" Tag="LastName" Click="Force_Sort"/>
+                <MenuItem Header="e-Mail" Tag="Mail" Click="Force_Sort"/>
+                <MenuItem Header="Job ID" Tag="Job" Click="Force_Sort"/>
+                <MenuItem Header="Hire date" Tag="HireDate" Click="Force_Sort"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Name ="groupGrid" HorizontalAlignment="Stretch" Margin="16,32,24,0" VerticalAlignment="Top" 
+              Grid.Column="1" IsEnabled="{Binding ElementName = DatabaseGrid, Path = Items.Count}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="128*"/>
+                <RowDefinition Height="56*"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="Employee" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                      Grid.RowSpan="1">
+
+                <Grid>
+                    <TextBox x:Name ="idBox" HorizontalAlignment="Stretch" Height="24" Margin="88,16,8,0" TextWrapping="Wrap" 
+                    VerticalAlignment="Top" Text="101"/>
+                    <TextBox x:Name ="lastNameBox" HorizontalAlignment="Stretch" Height="24" Margin="88,56,8,0" TextWrapping="Wrap" 
+                    VerticalAlignment="Top" Text="Example"/>
+                    <TextBox x:Name ="mailBox" HorizontalAlignment="Stretch" Height="24" Margin="88,96,8,0" TextWrapping="Wrap" 
+                    VerticalAlignment="Top" Text="example@admin.com"/>
+                    <TextBox x:Name ="jobBox" HorizontalAlignment="Stretch" Height="24" Margin="88,136,8,0" TextWrapping="Wrap" 
+                    VerticalAlignment="Top" Text="SA_MAN"/>
+                    <DatePicker x:Name ="hireDatePicker" HorizontalAlignment="Stretch" Height="24" Margin="88,176,8,16"
+                    VerticalAlignment="Top" Text="01.01.2000"/>
+                    <Label Content="ID" HorizontalAlignment="Stretch" Margin="8,16,156,0" VerticalAlignment="Top"/>
+                    <Label Content="LASTNAME" HorizontalAlignment="Stretch" Margin="8,56,156,0" VerticalAlignment="Top"/>
+                    <Label Content="E-MAIL" HorizontalAlignment="Stretch" Margin="8,96,156,0" VerticalAlignment="Top"/>
+                    <Label Content="JOB ID" HorizontalAlignment="Stretch" Margin="8,136,156,0" VerticalAlignment="Top"/>
+                    <Label Content="HIREDATE" HorizontalAlignment="Stretch" Margin="8,176,156,0" VerticalAlignment="Top"/>
+                </Grid>
+            </GroupBox>
+
+            <Button Content="Add" HorizontalAlignment="Center" Margin="8,20,112,0" VerticalAlignment="Top" Width="72" Grid.Row="1" 
+                    Height="24" Click="Action_Node" Tag="add_act"/>
+            <Button Content="Delete" HorizontalAlignment="Center" Margin="120,20,16,0" VerticalAlignment="Top" Width="72" Grid.Row="1" 
+                    Height="24" Click="Action_Node" Tag="delete_act"/>
+            <Button Content="Update" HorizontalAlignment="Center" Margin="8,64,112,0" VerticalAlignment="Top" Width="72" Grid.Row="1" 
+                    Height="24" Click="Action_Node" Tag="update_act"/>
+            <Button Content="Find by ID" HorizontalAlignment="Center" Margin="120,64,16,0" VerticalAlignment="Top" Width="72" Grid.Row="1" 
+                    Height="24" Click="Action_Node" Tag="find_act"/>
+        </Grid>
+
+        <DataGrid x:Name = "DatabaseGrid" 
+                      VerticalGridLinesBrush ="LightGray"
+                      AutoGenerateColumns="false" 
+                      RowBackground="White" 
+                      Margin="24,32,8,16"
+                      ItemsSource="{Binding}"
+                      VerticalAlignment="Stretch" 
+                      HorizontalAlignment="Stretch"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      SelectedItem ="{Binding Path=SelectedCustomer, Mode=TwoWay}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width ="1*" />
+                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" Width ="4*"/>
+                <DataGridTextColumn Header="Mail" Binding="{Binding Mail}" Width ="4*"/>
+                <DataGridTextColumn Header="Job" Binding="{Binding Job}" Width ="2*"/>
+                <DataGridTextColumn Header="Hire date" Binding="{Binding HireDate}" Width ="3*"/>
+            </DataGrid.Columns>
+
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copy"></MenuItem>
+                    <MenuItem Header="Paste"></MenuItem>
+                    <MenuItem Header="Cut"></MenuItem>
+                    <MenuItem Header="Delete"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+
+            <DataGrid.Resources>
+                <Style TargetType = "{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="LightGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+
+        </DataGrid>
+    </Grid>
+</Window>
