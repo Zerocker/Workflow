@@ -1,0 +1,94 @@
+:root
+{
+    --gradient-part: #444444;
+	--header: #333333;
+	--background: #D6D6D6;
+	--article: #eeeeee;
+	--link: #202040;
+	--in-focus: #202040;
+	--menu-bar: black;
+	--menu-bar-bg: white;
+	--shadow: black;
+	--border: #888;
+	--login: #fff;
+	--header-shadow: #666;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    background: grey;
+}
+
+header
+{
+    display: flex;
+    width: 1000px;
+    margin: 0 auto;
+    background: var(--header);
+}
+
+.cHeader
+{
+    width: 100%;
+}
+
+.logo
+{
+    height: 80px;
+    width: 240px;
+    background: var(--gradient-part);
+    color: var(--article);
+
+    text-align: center;
+    text-indent: 1em;
+    line-height: 80px;
+    letter-spacing: 0.8em;
+    font-weight: 800;
+    font-size: 30px;
+}
+
+.menuBar
+{
+    margin: auto auto;
+}
+.menuBar >a
+{
+    margin: 20px;
+    padding: 5px;
+    color: var(--login);
+}
+
+.login
+{
+    background: var(--login);
+    margin: auto auto;
+    padding: 5px;
+}
+
+.flex
+{
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 700px;
+    margin: 0 auto;
+}
+
+.item
+{
+    flex: 1 1 calc(33.33% - 30px);
+    margin: 5px;
+
+    box-sizing: border-box;
+    min-width: 80px;
+    padding: 50px 20px;
+    text-align: center;
+    font-size: 400%;
+    background: var(--background);
+}

@@ -1,0 +1,265 @@
+/*******************************************************/
+/*  ROOT SETTINGS */
+/*******************************************************/
+
+body 
+{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    background-color: var(--white);
+    margin: 0 8px;
+}
+  
+a 
+{
+    color: #000;
+}
+
+#main-body
+{
+    position: relative;
+    margin: 0px 8px;
+}
+
+.container
+{
+    clear: both;
+    overflow: auto;
+    margin: 16px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/*******************************************************/
+/*  NOTIFICATION BOX */
+/*******************************************************/
+#notif {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--chinese-white);
+    line-height: 24px;
+}
+#notif .notif-text,
+#notif .notif-close
+{
+    padding: 8px 12px;
+}
+#notif .notif-close
+{
+    position: relative;
+    float: right;
+    margin-left: auto;
+    padding: 8px 16px;
+
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    
+
+    transition: 0.3s;
+    cursor: pointer;
+}
+#notif .notif-close:hover
+{
+    color: var(--soft-red);
+}
+
+/*******************************************************/
+/*  DIRECTORIES NAVIGATION */
+/*******************************************************/
+
+.dd-breadcrumbs
+{
+    color: #ccc;
+    line-height: 1.5;
+    padding-left: 0;
+    margin: auto;
+    padding-bottom: 8px;
+    font-size: 15px;
+}
+.dd-breadcrumbs li
+{
+    display: inline;
+    list-style-type: none;
+    margin-left: 0;
+}
+.dd-breadcrumbs li::before
+{
+    content: "/";
+    padding-right: 4px;
+}
+.dd-breadcrumbs li::before
+{
+    content: "/";
+    padding-right: 4px;
+}
+.dd-breadcrumbs li:first-child:before
+{
+    content: "";
+    padding-right: 0;
+}
+
+/*******************************************************/
+/*  SEARCH FIELD */
+/*******************************************************/
+
+.brw-search
+{
+	padding-top: 8px;
+    margin-left: auto;
+	width: auto;
+	float: right;
+}
+
+/*******************************************************/
+/*  FILE BROWSER */
+/*******************************************************/
+
+#browser
+{
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+#browser td, #browser th
+{
+    border-bottom: 1px solid #aaa;
+    padding: 8px 12px;
+    white-space:nowrap;
+    height: 24px;
+    text-align: left;
+}
+#browser tr:hover
+{
+    background-color: #eee;
+}
+#browser thead
+{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-weight: 800;
+}
+#browser td:first-child
+{
+    width: 24px;
+}
+#browser td:nth-child(3)
+{
+    width: 1px;
+    white-space: nowrap;
+}
+#browser td:last-child
+{
+    width: 176px;
+    display: none;
+}
+
+.brw-fo-contents
+{
+	flex: 0 0 100%;
+	padding: 8px 0;
+	margin-left: auto;
+}
+
+.brw-fo-btn 
+{
+    background: var(--chinese-white);
+    border: none;
+    padding: 6px 0;
+    cursor: pointer;
+    margin: 0px 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+	width: 8em;
+}
+
+.brw-search
+{
+	margin: 0 0;
+	padding: 4px;
+}
+
+.brw-search input[type=text] {
+  margin: 0 0;
+  padding: 4px;
+  font-size: 17px;
+  border: none;
+  background: #f1f1f1;
+}
+
+/*******************************************************/
+/*  SELECTED ITEMS INFO */
+/*******************************************************/
+
+.selected
+{
+    padding: 8px 0px;
+}
+
+/*******************************************************/
+/*  PAGINATION BUTTONS */
+/*******************************************************/
+
+.pagination
+{
+    display: inline-block;
+    align-self: center;
+    padding: 8px;
+}
+.pagination a
+{
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 12px;
+}
+.pagination a.active
+{
+    background-color: #ddd;
+    color: #101010;
+}
+.pagination a:hover:not(.active)
+{
+    background-color: #f4f4f4;
+}
+
+/*******************************************************/
+/*  DESKTOP SETTINGS */
+/*******************************************************/
+
+@media screen and (min-width: 545px)
+{
+    #main-body
+    {
+        width: 80%;
+        margin: 0 auto;
+        justify-content: center;
+    } 
+    .container
+    {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    #browser
+    {
+        font-size: 16px;
+    }
+    #browser td:last-child
+    {
+        display: table-cell;
+    }
+    .per-page-select
+    {
+        padding: 0;
+        float: right;
+    }
+    .dd-breadcrumbs
+    {
+        padding: 0;
+    }
+}

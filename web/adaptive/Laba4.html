@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+/* Меню-бар */
+.menubar {
+  display: flex;
+
+  /* Разместим справа */
+  justify-content: flex-end;
+
+  /* Фон меню бара сверху */
+  background: #6e9cc3;
+}
+
+/* То что внутри меню-бара */
+.menubar a {
+  /* Цвет текста в меню-баре */
+  color:#fff;
+
+  /* Высота и ширина друг от друга */
+  padding:15px 10px;
+
+  /* Без оформления текста */
+  text-decoration:none;
+
+  /*Выравнивание текста по правому краю*/
+  text-align:center;
+}
+
+.menubar a:hover {
+ background:#5c8db7;
+}
+
+
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+  
+  /* макс ширина */
+  max-width: 700px;
+
+  /* выровняем по центру */
+  margin: 0 auto;
+}
+
+.item{
+  /* отнимем margin и скажем растягиваться */
+  flex:1 1 calc(33.33% - 30px);
+  margin:5px;
+
+  /* чтобы внутренний отступ не влиял когда там будет текст... */
+  box-sizing:border-box;
+
+  /* мин. ширина блока, чтобы переносились на другой ряд */
+  min-width:170px; 
+
+  /* для красоты */
+  padding:50px 20px;
+  font-size:400%;
+  text-align:center;
+  background:#b5ced8;
+}
+
+/*Шрифт*/
+body{font-family:arial; }
+
+
+.flex2 {
+  display: flex;
+  
+  background: #9ba5b3;
+  padding: 5px;
+  width: 33%;
+}
+
+.flex-itm {  
+  background: #2e5b61; 
+
+  /*Размер колонок справа*/
+  font-size: 2.5rem;  
+
+  color: #eee;  
+  margin: 5px; 
+  padding: 15px;
+}
+
+ul{
+  
+  flex-wrap: wrap;
+  max-height: 300px;
+  padding: 0;
+}
+li{
+  width: 33%;
+  height: 100px;
+  background: #9ba5b3;
+  background-clip: content-box;
+  padding: 10px;
+  list-style: none;
+}
+
+</style>
+
+</head>
+    <body>
+        <div class="menubar">
+            <a href="#">Главная</a>
+                <a href="#">О нас</a>
+                <a href="#">Продукты</a>
+                <a href="#">Контакты</a>
+        </div>
+
+        <div class="flex">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+        </div>
+
+        <div class="flex2">
+            <div class="flex-itm">1</div>
+            <div class="flex-itm">2</div>
+        </div>
+
+<ul>
+  <li>1</li>
+  <li>2</li>
+</ul>
+    </body>
+</html>
+

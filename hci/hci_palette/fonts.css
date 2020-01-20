@@ -1,0 +1,56 @@
+/*Описание шрифтов*/
+
+body
+{
+    font-family: SegoeUI, 'Segoe UI', "Open Sans";
+	font-size: 20px;
+}
+
+h2
+{
+    font-size: 28px;
+    color: black;
+	font-family: 'Segoe UI';
+	font-weight: bold;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+.logo{
+    font-family: 'Montserrat', sans-serif;
+	text-align: center;
+    text-indent: 1em;
+    line-height: 80px;
+    letter-spacing: 0.6em;
+    font-weight: 800;
+    font-size: 30px;
+}
+
+.menubar >a
+{
+    color: white;
+	font-weight: 600;
+}
+
+
+.enter
+{
+    color: black;
+	font-weight: 600;
+}
+
+
+.article-meta  *{
+    font-size: 0.8em;
+    color: #555;
+}
+
+.article-text
+{
+	font-family: 'PT Serif', serif;
+	font-weight: 400;
+	font-size: 18px;
+}

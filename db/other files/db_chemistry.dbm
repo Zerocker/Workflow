@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2-beta1" last-position="0,0" last-zoom="0.9" max-obj-count="7"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="Клиент" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="220" y="420"/>
+	<column name="Идентификатор" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="ФИО" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Постоянный" not-null="true">
+		<type name="bool" length="0"/>
+	</column>
+	<constraint name="Клиент_pk" type="pk-constr" table="public.&quot;Клиент&quot;">
+		<columns names="Идентификатор" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Услуга" layer="0" collapse-mode="2" max-obj-count="9">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="580" y="340"/>
+	<column name="ID" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="Название" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Тип" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Стоимость" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="Длительность услуги" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Скидка" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="Цена за срочность" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<column name="Цена за сложность" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<constraint name="Услуга_pk" type="pk-constr" table="public.&quot;Услуга&quot;">
+		<columns names="ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Заказ" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="300" y="620"/>
+	<column name="Идентификатор" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="Дата приема" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="Дата возврата" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="СРОЧНОСТЬПИЗДА" not-null="true">
+		<type name="bool" length="0"/>
+	</column>
+	<constraint name="Заказ_pk" type="pk-constr" table="public.&quot;Заказ&quot;">
+		<columns names="Идентификатор" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="Идентификатор_Клиент" index="3"/>
+		<object name="Код_Филиал" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Клиент_fk" index="1"/>
+		<object name="Филиал_fk" index="2"/>
+	</customidxs>
+</table>
+
+<relationship name="Клиент_has_many_Заказ" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Клиент&quot;"
+	 dst-table="public.&quot;Заказ&quot;"
+	 src-required="true" dst-required="false"/>
+
+<table name="Филиал" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="880" y="840"/>
+	<column name="Код" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="Название" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Адрес" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="Филиал_pk" type="pk-constr" table="public.&quot;Филиал&quot;">
+		<columns names="Код" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Филиал_has_many_Заказ" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Филиал&quot;"
+	 dst-table="public.&quot;Заказ&quot;"
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-3.21908" y="0.0686343"/>
+	</label>
+</relationship>
+
+<table name="many_Заказ_has_many_Услуга" layer="0" collapse-mode="2" max-obj-count="4">
+	<schema name="public"/>
+	<position x="1000" y="620"/>
+
+	<customidxs object-type="column">
+		<object name="ID_Услуга" index="1"/>
+		<object name="Идентификатор_Заказ" index="0"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="many_Заказ_has_many_Услуга_pk" index="0"/>
+		<object name="Заказ_fk" index="1"/>
+		<object name="Услуга_fk" index="2"/>
+	</customidxs>
+</table>
+
+<relationship name="Заказ_has_many_many_Заказ_has_many_Услуга" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.&quot;Заказ&quot;"
+	 dst-table="public.&quot;many_Заказ_has_many_Услуга&quot;"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="6.36047" y="-7.72722"/>
+	</label>
+</relationship>
+
+<relationship name="Услуга_has_many_many_Заказ_has_many_Услуга" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.&quot;Услуга&quot;"
+	 dst-table="public.&quot;many_Заказ_has_many_Услуга&quot;"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="8.81647" y="3.70319"/>
+	</label>
+</relationship>
+
+<table name="Срочность" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1060" y="300"/>
+	<column name="ID_Срочность" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="Тип" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="Цена" not-null="true">
+		<type name="real" length="0"/>
+	</column>
+	<constraint name="Срочность_pk" type="pk-constr" table="public.&quot;Срочность&quot;">
+		<columns names="ID_Срочность" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Срочность_has_many_many_Заказ_has_many_Услуга" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Срочность&quot;"
+	 dst-table="public.&quot;many_Заказ_has_many_Услуга&quot;"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="153.275" y="12.1143"/>
+	</label>
+</relationship>
+
+</dbmodel>

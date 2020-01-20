@@ -1,0 +1,161 @@
+.header 
+{
+    position: relative;
+    width: 100%;
+    z-index: 3;
+    padding: 4px 0px;
+    overflow: auto;
+    
+    background: var(--white);
+    background: linear-gradient(180deg, var(--white) 0%, var(--af-white) 60%, var(--almost-white) 100%);
+}
+  
+.header ul 
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    text-align: center;
+}
+  
+.header li a 
+{
+    display: block;
+    padding: 24px 24px;
+    text-decoration: none;   
+}
+  
+.header li a:hover,
+.header .menu-btn:hover 
+{
+    background: var(--chinese-black);
+    color: var(--chinese-white);
+}
+  
+.header .logo 
+{
+    display: block;
+    float: left;
+    font-size: 24px;
+    padding: 18px 24px;
+    text-decoration: none;
+}
+  
+/* menu */
+  
+.header .menu 
+{
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+}
+  
+/* menu icon */
+  
+.header .menu-icon 
+{
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    padding: 28px 24px;
+    position: relative;
+    user-select: none;
+}
+  
+.header .menu-icon .navicon 
+{
+    background: #333;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+}
+  
+.header .menu-icon .navicon:before,
+.header .menu-icon .navicon:after
+{
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+  
+.header .menu-icon .navicon:before
+{
+    top: 5px;
+}
+  
+.header .menu-icon .navicon:after
+{
+    top: -5px;
+}
+  
+/* menu btn */
+  
+.header .menu-btn 
+{
+    display: none;
+}
+  
+.header .menu-btn:checked ~ .menu 
+{
+    max-height: 240px;
+}
+  
+.header .menu-btn:checked ~ .menu-icon .navicon
+{
+    background: transparent;
+}
+ 
+.header .menu-btn:checked ~ .menu-icon .navicon:before
+{
+    transform: rotate(-45deg);
+}
+  
+.header .menu-btn:checked ~ .menu-icon .navicon:after 
+{
+    transform: rotate(45deg);
+}
+  
+.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after
+{
+    top: 0;
+}
+  
+@media screen and (min-width: 545px) 
+{
+    .header ul
+    {
+        background-color: transparent;
+        box-shadow: none;
+    }
+    
+    .header li 
+    {
+        float: left;
+    }
+    
+    .header li a
+    {
+        padding: 20px 30px;
+    }
+
+    .header .menu
+    {
+        clear: none;
+        float: right;
+        max-height: none;
+        border: none;
+    }
+
+    .header .menu-icon 
+    {
+        display: none;
+    }
+}

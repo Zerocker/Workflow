@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Page</title>
+    <meta name="description" content="">
+    
+    <!-- Mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/flex-header.css">
+    <link rel="stylesheet" href="css/colors.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    
+    <!-- Scripts -->
+	<script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="js/site.js"></script>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">Logo</a>
+        <span class="navbar-toggle" id="navbar-btn">
+                <i class="fa fa-bars"></i>
+            </span>
+        <ul class="main-navbar" id="navbar-items">
+            <li>
+                <a href="#" class="nav-links">Files</a>
+            </li>
+            <li>
+                <a href="#" class="nav-links">About</a>
+            </li>
+            <li>
+                <a href="#" class="nav-links">Log In</a>
+            </li>
+        </ul> 
+    </nav>
+    
+    <div id="main-body">
+		
+		<div class="dd-input" id="dd-input-actions">
+			<div class="dd-input-content">
+				<input type="text" id="dd-input-txt"/>
+				<div id="dd-input-string">
+					<input type="button" id="dd-input-cls" value="Cancel" />
+					<input type="button" id="dd-input-btn" value="" />
+				</div>
+			</div>
+
+			<div class="dd-input-content">
+				<form method="post" enctype="multipart/form-data">
+					<input id="dd-input-upl" type="file" name="files" multiple />
+					<button id="dd-input-add" onclick="postAdd()">Upload</button>
+				</form>
+			</div>
+		</div>
+
+        <div class="container" id="notif" style="display: none;">
+            <div class="notif-text">
+                Indicates a dangerous or potentially negative action.
+            </div>
+            <span class="notif-close" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
+
+        <div class="container" id="dd">
+            <div class="dd-directory">
+                <ul class="dd-breadcrumbs">
+                    <li><a href="#">Home</a></li>
+                </ul>
+            </div>
+
+            <div class="brw-search">
+                <input type="text" placeholder="Search"/>
+            </div>
+			
+			<div class="brw-fo-contents" style="display:none;">
+				<button class="brw-fo-btn" onclick="callInput('Upload')">Add Files</button>
+				<button class="brw-fo-btn" onclick="callInput('Create')">Create Folder</button>
+				<button class="brw-fo-btn" onclick="postCopyCut(false)">Copy</button>
+				<button class="brw-fo-btn" onclick="postCopyCut(true)">Cut</button>
+				<button class="brw-fo-btn" onclick="postPaste()" id="brw-fo-paste">Paste</button>
+				<button class="brw-fo-btn" onclick="callInput('Rename')">Rename</button>
+				<button class="brw-fo-btn" onclick="postDelete()">Delete</button>
+			</div>
+        </div>
+
+        <table id="browser">
+            <thead>
+                <tr>
+                    <td class="brw-column-name">Name</td>
+                    <td class="brw-column-size">Size</td>
+                    <td class="brw-column-date">Date</td>
+					<td>Actions</td>
+                </tr>
+            </thead>
+            <tbody>
+				<tr style="display: none;">
+                    <td><a href="">...</a></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><a href="root.html">Root</a></td>
+                    <td>Folder</td>
+                    <td class="brw-column-date">01/01/20 12:00:00</td>
+					<td><a href="">Copy</a> | <a href="">Move</a> | <a href="">Rename</a> | <a href="">Delete</a></td>
+                </tr>
+				<tr>
+                    <td><a href="empty.html">Empty</a></td>
+                    <td>Folder</td>
+                    <td class="brw-column-date">01/01/20 12:00:00</td>
+					<td><a href="">Copy</a> | <a href="">Move</a> | <a href="">Rename</a> | <a href="">Delete</a></td>
+                </tr>
+                <tr>
+                    <td><a href="">text.txt</a></td>
+                    <td>10KB</td>
+                    <td class="brw-column-date">01/01/20 12:00:00</td>
+					<td><a href="">Copy</a> | <a href="">Move</a> | <a href="">Rename</a> | <a href="">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="container">
+            <div class="selected">
+                <span id="selected-text">
+                </span>
+            </div>
+			<div class="storage">
+                <span id="storage-text">
+					Storage: 14KB of 16GB
+                </span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
