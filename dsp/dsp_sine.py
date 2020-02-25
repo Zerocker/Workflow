@@ -11,13 +11,16 @@ sample_rate = 32
 T = 1 / frequency
 Ts = 1 / sample_rate
 
+_min = 0
+_max = 1
+
 # Sine function
 def sinf(t):
     return amplitude * np.sin(2*np.pi*frequency*t)
 
 # Nyquist–Shannon sampling theorem
 def sin_nsst(t, sr, fs):
-    ts = np.arange(0, 1+fs, fs)
+    ts = np.arange(_min, _max+fs, fs)
     sm = 0
     for k in range(-len(ts), len(ts)):
         sm += sinf(k/sr) * np.sinc(k - sr*t)
@@ -25,7 +28,7 @@ def sin_nsst(t, sr, fs):
     return ts, sm
 
 # Analog sine wave
-x = np.linspace(0, 1, sample_rate)
+x = np.linspace(_min, _max, sample_rate)
 y = sinf(x)
 
 # Recontructed sine wave
