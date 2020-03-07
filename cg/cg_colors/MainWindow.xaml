@@ -1,0 +1,315 @@
+﻿<Window x:Class="Lab.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        ContentRendered="Window_Render"
+        Title="MainWindow" Height="540" Width="820" ResizeMode="NoResize">
+    <Grid
+        Margin="4, 4, 4, 4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75*" />
+            <ColumnDefinition Width="25*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="33*" />
+            <RowDefinition Height="33*" />
+            <RowDefinition Height="33*" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Cmyk" Margin="8, 8, 8, 8" Grid.Row="0" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                </Grid.RowDefinitions>
+                <!--#region CMYK: CYAN -->
+                <Grid Grid.Row="0">
+                    <Label 
+                            Content="Cyan"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding CMY.C, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="CMYK_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="10"/>
+                    <xctk:IntegerUpDown Margin="500,4,0,4" HorizontalAlignment="Left"
+                            Maximum="100" Minimum="0" MinWidth="64"
+                            Value="{Binding CMY.C, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region CMYK: MAGENTA -->
+                <Grid Grid.Row="1">
+                    <Label 
+                            Content="Magenta"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding CMY.M, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="CMYK_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="10"/>
+                    <xctk:IntegerUpDown Margin="500,4,0,4" HorizontalAlignment="Left"
+                            Maximum="100" Minimum="0" MinWidth="64"
+                            Value="{Binding CMY.M, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region CMYK: YELLOW -->
+                <Grid Grid.Row="2">
+                    <Label 
+                            Content="Yellow"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding CMY.Y, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="CMYK_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="10"/>
+                    <xctk:IntegerUpDown Margin="500,4,0,4" HorizontalAlignment="Left"
+                            Maximum="100" Minimum="0" MinWidth="64"
+                            Value="{Binding CMY.Y, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region CMYK: BLACK -->
+                <Grid Grid.Row="3">
+                    <Label 
+                            Content="Black"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding CMY.K, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="CMYK_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="10"/>
+                    <xctk:IntegerUpDown Margin="500,4,0,4" HorizontalAlignment="Left"
+                            Maximum="100" Minimum="0" MinWidth="64"
+                            Value="{Binding CMY.K, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Rgb" Margin="8, 8, 8, 8" Grid.Row="1" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                </Grid.RowDefinitions>
+                <!--#region RGB: RED -->
+                <Grid Grid.Row="0">
+                    <Label 
+                            Content="Red"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="255"
+                            Interval="1"
+                            Value="{Binding RGB.R, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="RGB_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="16"/>
+                    <xctk:IntegerUpDown Margin="500,8,0,8" HorizontalAlignment="Left"
+                            Maximum="255" Minimum="0" MinWidth="64"
+                            Value="{Binding RGB.R, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region RGB: GREEN -->
+                <Grid Grid.Row="1">
+                    <Label 
+                            Content="Green"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="255"
+                            Interval="1"
+                            Value="{Binding RGB.G, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="RGB_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="16"/>
+                    <xctk:IntegerUpDown Margin="500,8,0,8" HorizontalAlignment="Left"
+                            Maximum="255" Minimum="0" MinWidth="64"
+                            Value="{Binding RGB.G, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region RGB: BLUE -->
+                <Grid Grid.Row="2">
+                    <Label 
+                            Content="Blue"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="255"
+                            Interval="1"
+                            Value="{Binding RGB.B, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="RGB_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="16"/>
+                    <xctk:IntegerUpDown Margin="500,8,0,8" HorizontalAlignment="Left"
+                            Maximum="255" Minimum="0" MinWidth="64"
+                            Value="{Binding RGB.B, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Hsv" Margin="8, 8, 8, 8" Grid.Row="2" Grid.Column="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                </Grid.RowDefinitions>
+                <!--#region HSV: HUE -->
+                <Grid Grid.Row="0">
+                    <Label 
+                            Content="Hue"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="360"
+                            Interval="1"
+                            Value="{Binding HSV.H, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="HSV_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="16"/>
+                    <xctk:IntegerUpDown Margin="500,8,0,8" HorizontalAlignment="Left"
+                            Maximum="360" Minimum="0" MinWidth="64"
+                            Value="{Binding HSV.H, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region HSV: SAT -->
+                <Grid Grid.Row="1">
+                    <Label 
+                            Content="Sat."
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding HSV.S, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="HSV_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="10"/>
+                    <xctk:IntegerUpDown Margin="500,8,0,8" HorizontalAlignment="Left"
+                            Maximum="100" Minimum="0" MinWidth="64"
+                            Value="{Binding HSV.S, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+                <!--#region HSV: VALUE -->
+                <Grid Grid.Row="2">
+                    <Label 
+                            Content="Value"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8, 0, 8, 0"/>
+                    <Slider 
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            Minimum="0" 
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding HSV.V, UpdateSourceTrigger=PropertyChanged}"
+                            ValueChanged="HSV_ValueChanged"
+                            Margin="64,0,96,0"
+                            TickPlacement="BottomRight"
+                            TickFrequency="16"/>
+                    <xctk:IntegerUpDown Margin="500,8,0,8" HorizontalAlignment="Left"
+                            Maximum="100" Minimum="0" MinWidth="64"
+                            Value="{Binding HSV.V, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+
+        <Grid 
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="16, 16, 16, 16">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <SolidColorBrush x:Name="CmykRect" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock x:Name="CmykLabel"/>
+        </Grid>
+        <Grid 
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="16, 16, 16, 16">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <SolidColorBrush x:Name="RGBRect" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock x:Name="RgbLabel"/>
+        </Grid>
+        <Grid 
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="16, 16, 16, 16">
+            <Rectangle>
+                <Rectangle.Fill>
+                    <SolidColorBrush x:Name="HsvRect" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock x:Name="HsvLabel"/>
+        </Grid>
+    </Grid>
+</Window>

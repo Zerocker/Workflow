@@ -7,9 +7,12 @@ import matplotlib.pyplot as plt
 # Sine wave parameters
 frequency = 2
 amplitude = 5
-sample_rate = 32
+sample_rate = 16
 T = 1 / frequency
 Ts = 1 / sample_rate
+
+super_sr = 10000
+t_ssr = 1 / super_sr
 
 _min = 0
 _max = 1
@@ -18,22 +21,23 @@ _max = 1
 def sinf(t):
     return amplitude * np.sin(2*np.pi*frequency*t)
 
-# Nyquist–Shannon sampling theorem
-def sin_nsst(t, sr, fs):
-    ts = np.arange(_min, _max+fs, fs)
-    sm = 0
-    for k in range(-len(ts), len(ts)):
-        sm += sinf(k/sr) * np.sinc(k - sr*t)
-
-    return ts, sm
-
 # Analog sine wave
-x = np.linspace(_min, _max, sample_rate)
+x = np.linspace(_min, _max, super_sr)
 y = sinf(x)
 
-# Recontructed sine wave
-xs, sm =  sin_nsst(x, sample_rate, Ts)
-ys = sinf(xs)
+# Sampling points
+xp = np.linspace(_min, _max, sample_rate)
+yp = sinf(xp)
+
+# Nyquist–Shannon sampling theorem
+xs = np.linspace(_min, _max, super_sr)
+ys = []
+
+for i in xs:
+    sm = 0.0
+    for k in range(len(xp)):
+        sm += yp[k] * np.sinc((i-xp[k])*sample_rate)
+    ys += [sm]
 
 # ---------------------------------------------------------------------
 
@@ -51,10 +55,11 @@ for i in range(2):
     axs[i].set_ylabel('Amplitude')
 
     if (i == 0):
-        axs[i].stem(x, y, markerfmt="", use_line_collection=True)
-        axs[i].plot(x, sm, 'o')
+        axs[i].plot(x, y)
+        axs[i].stem(xp, yp, use_line_collection=True)
     else:
-        axs[i].stem(xs, ys, markerfmt="", use_line_collection=True)
+        axs[i].plot(xs, ys)
+        axs[i].stem(xp, yp, use_line_collection=True)
 
 plt.tight_layout()
 plt.show()
