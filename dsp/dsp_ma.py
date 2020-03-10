@@ -7,11 +7,11 @@ from scipy.stats import norm
 from collections import deque
 
 # Parameters
-noise_ratio = 0.7
-window_size = 5
+noise_ratio = 1.5
+window_size = 25
 frequency = 2
 amplitude = 5
-sample_rate = 32
+sample_rate = 256
 
 _min = 0
 _max = 1
@@ -22,7 +22,7 @@ def randf(t, ratio):
 
 # Sine wave
 def sinf(t):
-    return amplitude * ( np.sin(2*np.pi*frequency*t) + np.sin(5*np.pi*frequency*t))
+    return amplitude * ( np.sin(2*np.pi*frequency*t) )
 
 # Gaussian distribution
 def gaussian(x, mu, sig):
@@ -30,24 +30,33 @@ def gaussian(x, mu, sig):
 
 # Moving average
 def moving_avg(data, k):
-    f_sum = np.zeros((len(data),))
+    # f_sum = np.zeros((len(data),))
+    # for i in range(len(data)):
+    #     wnd = data[i:(i+k)]
+    #     f_sum[i] = np.sum(wnd)
+    # return f_sum / k
 
-    for i in range(len(data)):
-        wnd = data[i:(i+k)]
-        f_sum[i] = np.sum(wnd)
-    
-    return f_sum / k
+    cumsum = np.cumsum(np.insert(data, 0, [0]*k))
+    avg = cumsum[k:] - cumsum[:-k]
+    return (avg) / float(k)
 
 # Weighted moving average
 def moving_avg_weight(x, y, k):
-    w = gaussian(x, -1, 1)
-    f_sum = np.zeros((len(y),))
+    # w = gaussian(x, -1, 1)
+    # f_sum = np.zeros((len(y),))
+    # for i in range(len(y)):
+    #     wnd = y[i:(i+k)]
+    #     f_sum[i] = w[i] * np.sum(wnd)
+    # return f_sum / k
 
-    for i in range(len(y)):
-        wnd = y[i:(i+k)]
-        f_sum[i] = w[i] * np.sum(wnd)
+    w = gaussian(x, 0, 1)
+    cumsum = np.cumsum(np.insert(y, 0, [0]*k))
+    avg = cumsum[k:] - cumsum[:-k]
+    result = []
     
-    return f_sum / k
+    for i in range(len(avg)):
+        result += [ (w[i] * avg[i]) / float(k) ]
+    return result
 
 def moving_avg_perf(data, k):
     weight = np.ones(int(k))/float(k)    
