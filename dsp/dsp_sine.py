@@ -59,7 +59,7 @@ for i in range(2):
         axs[i].stem(xp, yp, use_line_collection=True)
     else:
         axs[i].plot(xs, ys)
-        axs[i].stem(xp, yp, use_line_collection=True)
+        # axs[i].stem(xp, yp, use_line_collection=True)
 
 plt.tight_layout()
 plt.show()
