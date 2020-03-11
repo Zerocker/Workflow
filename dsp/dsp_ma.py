@@ -8,7 +8,7 @@ from collections import deque
 
 # Parameters
 noise_ratio = 1.5
-window_size = 25
+window_size = 5
 frequency = 2
 amplitude = 5
 sample_rate = 256

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # Sine wave parameters
 frequency = 2
 amplitude = 5
-sample_rate = 16
+sample_rate = 6
 T = 1 / frequency
 Ts = 1 / sample_rate
 
