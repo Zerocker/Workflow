@@ -22,7 +22,19 @@ namespace Lines
 
 		public void DrawPixel(Point a, Color color)
 		{
+			var x = a.X;
+			var y = a.Y;
+			
 			Canvas.SetPixel(a.X, a.Y, color);
+
+			Canvas.SetPixel(x - 1, y - 1, color);
+			Canvas.SetPixel(x - 1, y, color);
+			Canvas.SetPixel(x - 1, y + 1, color);
+			Canvas.SetPixel(x, y - 1, color);
+			Canvas.SetPixel(x, y + 1, color);
+			Canvas.SetPixel(x + 1, y - 1, color);
+			Canvas.SetPixel(x + 1, y, color);
+			Canvas.SetPixel(x + 1, y + 1, color);
 		}
 
 		public void DrawRect(Point a, int width, int height, Color color)
@@ -76,7 +88,7 @@ namespace Lines
 				int d1 = dY << 1;
 				int d2 = (dY - dX) << 1;
 
-				Canvas.SetPixel(A.X, A.Y, color);
+				DrawPixel(A, color);
 				int x = A.X + sX;
 				int y = A.Y;
 
@@ -89,7 +101,7 @@ namespace Lines
 					}
 					else
 						d += d1;
-					Canvas.SetPixel(x, y, color);
+					DrawPixel(new Point(x, y), color);
 					x += sX;
 				}
 			}
@@ -99,7 +111,7 @@ namespace Lines
 				int d1 = dX << 1;
 				int d2 = (dX - dY) << 1;
 
-				Canvas.SetPixel(A.X, A.Y, color);
+				DrawPixel(A, color);
 				int x = A.X;
 				int y = A.Y + sY;
 
@@ -112,7 +124,7 @@ namespace Lines
 					}
 					else
 						d += d1;
-					Canvas.SetPixel(x, y, color);
+					DrawPixel(new Point(x, y), color);
 					y += sY;
 				}
 			}
