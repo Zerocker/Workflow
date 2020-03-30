@@ -7,12 +7,13 @@ from scipy.signal import square
 from collections import deque
 
 # Parameters
-noise_ratio = 0.3
+noise_ratio = 0.7
 frequency = 10
 amplitude = 1
 sample_rate = 500
 
-N = 10
+N = 1000
+Ns = sample_rate // N
 
 T = 1 / frequency
 
@@ -33,6 +34,10 @@ def wavef(t):
 x = np.arange(_min, _max, 1/sample_rate)
 y = wavef(x) + randf(x, noise_ratio)
 
+y_parts = np.array(np.array_split(y, N))
+
+y_clear = y_parts.sum(axis=0) / N
+
 x_pulse = np.arange(_min, max(x), 1/N)
 # y_pulse = np.zeros(len(x_pulse))
 # for i in range(len(x_pulse)):
@@ -40,7 +45,7 @@ x_pulse = np.arange(_min, max(x), 1/N)
 # ym = np.array(np.array_split(y, sample_rate))
 # y_ = ym.sum(axis=0) / N
 
-print(x_pulse)
+print(len(y_parts))
 
 # ---------------------------------------------------------------------
 
@@ -57,12 +62,12 @@ for i in range(2):
     axs[i].set_xlabel('Time')
     axs[i].set_ylabel('Amplitude')
     axs[i].set_ylim([-amplitude*2, amplitude*2])
-    axs[i].set_xlim([0, T])
-
+    
     if (i == 0):
+        axs[i].set_xlim([0, T])
         axs[i].plot(x, y)
-    # elif (i == 1):
-    #     axs[i].plot(x[:Ns], y_)
+    elif (i == 1):
+        axs[i].plot(x[:N], y_clear)
     # else:
     #     axs[i].plot(x, yx)
 

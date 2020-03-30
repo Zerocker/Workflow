@@ -66,9 +66,9 @@ namespace ConvolutionMatrix
                     editedBmp = new Bitmap(dlg.FileName);
 
                     originalPictureBox.LoadAsync(dlg.FileName);
-                    originalPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    originalPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     editedPictureBox.LoadAsync(dlg.FileName);
-                    editedPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    editedPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
 
                 FilterEnabled();
