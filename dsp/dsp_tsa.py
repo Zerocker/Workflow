@@ -3,22 +3,18 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import square
-from collections import deque
 
 # Parameters
-noise_ratio = 0.7
-frequency = 10
+N = 1000
+noise_ratio = 0.5
+frequency = 5
 amplitude = 1
 sample_rate = 500
 
-N = 1000
-Ns = sample_rate // N
-
+# Consts
 T = 1 / frequency
-
 _min = 0
-_max = 20
+_max = 1
 
 # Random function
 def randf(t, ratio):
@@ -30,46 +26,47 @@ def wavef(t):
 
 # ---------------------------------------------------------------------
 
-# Original signal
+# Time (x-axis)
 x = np.arange(_min, _max, 1/sample_rate)
-y = wavef(x) + randf(x, noise_ratio)
 
-y_parts = np.array(np.array_split(y, N))
+# Number of function's periods
+y_ = []
+for i in range(N):
+    y_ += [wavef(x) + randf(x, noise_ratio)]
 
-y_clear = y_parts.sum(axis=0) / N
-
-x_pulse = np.arange(_min, max(x), 1/N)
-# y_pulse = np.zeros(len(x_pulse))
-# for i in range(len(x_pulse)):
-
-# ym = np.array(np.array_split(y, sample_rate))
-# y_ = ym.sum(axis=0) / N
-
-print(len(y_parts))
+# Average sum
+y_tsa = []
+for i in range(len(y_[0])):
+    total = 0
+    for row in y_:
+        total += row[i]
+    y_tsa += [total / N]
 
 # ---------------------------------------------------------------------
 
 # Drawing routine
-fig, axs = plt.subplots(2)
+plots = 3
+fig, axs = plt.subplots(plots)
 fig.subplots_adjust(wspace=0.9, hspace=0.2)
-titles = ['Original signal', 'Smoothed signal (MA)', 'Smoothed signal (WMA)']
+titles = ['Original signal', 'Sum of signals', f'Smoothed signal (TSA N={N})']
 
-for i in range(2):
+for i in range(plots):
     axs[i].grid(True)
     axs[i].axhline(y=0, color='k')
 
     axs[i].set_title(titles[i])
     axs[i].set_xlabel('Time')
     axs[i].set_ylabel('Amplitude')
-    axs[i].set_ylim([-amplitude*2, amplitude*2])
-    
+    # axs[i].set_ylim([-amplitude*4, amplitude*4])
+    axs[i].set_xlim([0, T])
+
     if (i == 0):
-        axs[i].set_xlim([0, T])
-        axs[i].plot(x, y)
+        axs[i].plot(x, y_[0])
     elif (i == 1):
-        axs[i].plot(x[:N], y_clear)
-    # else:
-    #     axs[i].plot(x, yx)
+        for j in range(N):
+            axs[i].plot(x, y_[j])
+    else:
+        axs[i].plot(x, y_tsa)
 
 plt.tight_layout()
 plt.show()
