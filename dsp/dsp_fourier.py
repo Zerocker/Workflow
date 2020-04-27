@@ -10,6 +10,8 @@ from matplotlib.widgets import Slider, TextBox
 parser = argparse.ArgumentParser(description='Signal recovery using a Fourier series')
 parser.add_argument('-m', dest='m_harmonics', type=int, default=10, required=True,
                     help='Number of calculated harmonics')
+parser.add_argument('-s', dest='saw', action="store_true",
+                    help='Draw a saw signal')       
 
 args = parser.parse_args()
 
@@ -23,44 +25,72 @@ def f(t, a, b):
         sum_m += a[k]*np.cos(k*t) + b[k]*np.sin(k*t)
     return a[0] * 0.5 + sum_m
 
+def saw(t, b):
+    r =[]
+    for t_ in t:
+        sum_s = 0.0
+        for idx, bk in enumerate(b):
+            sum_s += bk * np.sin((idx+1)*t_)
+        r += [sum_s]
+    return r
+
 # ---------------------------------------------------------------------
 # Random a-coefs and b-coefs
 a = np.random.uniform(-1.0, 1.0, M+1)
 b = np.random.uniform(-1.0, 1.0, M+1)
+s = [(-1)**(k+1)*(2/k) for k in range(1, M+1)]
 
-print("a >", a)
-print("b >", b)
+if args.saw:    
+    print("s > ", len(s))
+else:
+    print("a >", len(a))
+    print("b >", len(b))
 
 # X-values
-x = np.arange(-np.pi, np.pi, 1/500.0)
+x = np.arange(-2*np.pi, 2*np.pi, 1/500.0)
 # Y-values
-y = f(x, a, b)
+y = f(x, a, b) if not args.saw else saw(x, s)
 
 # Harmonics
 y_ = []
-for k in range(0, len(a)):
-    _ = a[0]*0.5 + a[k]*np.cos(k*x) + b[k]*np.sin(k*x)
-    y_ += [_]
+if not args.saw:
+    for k in range(0, len(a)):
+        _ = a[0]*0.5 + a[k]*np.cos(k*x) + b[k]*np.sin(k*x)
+        y_ += [_]
+else:
+    for idx, bk in enumerate(s):
+        _ = bk * np.sin((idx+1)*x)
+        y_ += [_]
     
 # ---------------------------------------------------------------------
 titles = [f'Recovered signal (M={M})', "A(k)", "B(k)", "Arbitrary Harmonic"]
 z = [i for i in range(M+1)]
 
-ax1 = plt.subplot(2, 2, 1)
-ax1.grid(True)
-ax1.axhline(y=0, color='k')
-ax1.set_title(titles[1])
-ax1.set_xlabel('k')
-ax1.set_xticks(z, minor=True)
-ax1.stem(z, a, use_line_collection=True)
+if not args.saw:
+    ax1 = plt.subplot(2, 2, 1)
+    ax1.grid(True)
+    ax1.axhline(y=0, color='k')
+    ax1.set_title(titles[1])
+    ax1.set_xlabel('k')
+    ax1.set_xticks(z, minor=True)
+    ax1.stem(z, a, use_line_collection=True)
 
-ax2 = plt.subplot(2, 2, 2)
-ax2.grid(True)
-ax2.axhline(y=0, color='k')
-ax2.set_title(titles[2])
-ax2.set_xlabel('k')
-ax2.set_xticks(z[1:], minor=True)
-ax2.stem(z[1:], b[1:], use_line_collection=True)
+    ax2 = plt.subplot(2, 2, 2)
+    ax2.grid(True)
+    ax2.axhline(y=0, color='k')
+    ax2.set_title(titles[2])
+    ax2.set_xlabel('k')
+    ax2.set_xticks(z[1:], minor=True)
+    ax2.stem(z[1:], b[1:], use_line_collection=True)
+
+else:
+    ax0 = plt.subplot(2, 1, 1)
+    ax0.grid(True)
+    ax0.axhline(y=0, color='k')
+    ax0.set_title(titles[2])
+    ax0.set_xlabel('k')
+    ax0.set_xticks(z[:-1], minor=True)
+    ax0.stem(z[:-1], s, use_line_collection=True)
 
 ax3 = plt.subplot(2, 2, (3, 4))
 ax3.grid(True)
