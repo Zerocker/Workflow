@@ -19,6 +19,7 @@ args = parser.parse_args()
 # Consts
 M = args.m_harmonics
 T = args.n_value*np.pi
+print("N >", T)
 
 # ---------------------------------------------------------------------
 # Just a function
@@ -29,7 +30,7 @@ def f_abs(x):
 def calc_c(k, L, func, sincos):
     comb_func = lambda t: func(t) * sincos((k*np.pi*t)/(L))
     result = integrate.quad(comb_func, -L, L)[0]
-    return 1/L * float(result)
+    return (1/L) * float(result)
 
 # For A0
 def calc_0(L, func):
@@ -37,32 +38,32 @@ def calc_0(L, func):
     return 1/(2*L) * float(result)
 
 # Recreate signal with fourier series
-def recreate_func(t, a, b):
+def recreate_func(t, a, b, L):
     sum_m = 0.0
     for k in range(1, len(a)):
-        sum_m += a[k]*np.cos(k*t) + b[k]*np.sin(k*t)
-    return a[0] * 0.5 + sum_m
+        sum_m += a[k]*np.cos((k*np.pi*t)/(L)) + b[k]*np.sin((k*np.pi*t)/(L))
+    return a[0] + sum_m
 
 # ---------------------------------------------------------------------
 # Calculating a-coefs and b-coefs
 a = [calc_c(k, T, f_abs, np.cos) for k in np.arange(1, M+1)]
+# a = [calc_a(k) for k in np.arange(1, M+1)]
 a.insert(0, calc_0(T, f_abs))
 b = np.zeros(M+1)
 
-print("len(a) matches len(b):", len(a) == len(b))
+# print("len(a) matches len(b):", len(a) == len(b))
 print("a >", *["{0:.2f}".format(i) for i in a])
 print("b >", *["{0:.2f}".format(i) for i in b])
 
-
 # X-values
-x = np.arange(-T, T, 1/500.0)
+x = np.arange(-10, 10, 1/500.0)
 # Y-values
-y = recreate_func(x, a, b)
+y = recreate_func(x, a, b, T)
 
 # Harmonics
 y_ = []
 for k in range(0, len(a)):
-    _ = a[0]*0.5 + a[k]*np.cos(k*x) + b[k]*np.sin(k*x)
+    _ = a[0] + a[k]*np.cos(k*x) + b[k]*np.sin(k*x)
     y_ += [_]
     
 # ---------------------------------------------------------------------
