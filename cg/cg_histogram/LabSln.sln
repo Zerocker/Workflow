@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Histogram", "Histogram.csproj", "{3BFB397C-197D-41BA-9C13-A628C79E1EE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BFB397C-197D-41BA-9C13-A628C79E1EE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BFB397C-197D-41BA-9C13-A628C79E1EE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BFB397C-197D-41BA-9C13-A628C79E1EE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BFB397C-197D-41BA-9C13-A628C79E1EE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0081E23E-C2D8-4990-B19E-8EDCC6AFE1AE}
+	EndGlobalSection
+EndGlobal
