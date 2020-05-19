@@ -18,7 +18,7 @@ args = parser.parse_args()
 # Consts
 M = args.m_harmonics
 
-# Recreate signal function with FFT
+# Recreate signal function with Fourier Series
 def f(t, a, b):
     sum_m = 0.0
     for k in range(1, len(a)):
